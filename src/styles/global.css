@@ -1,22 +1,24 @@
 :root {
-  --night: #14213d;
-  --night-2: #1c2c4f;
-  --amber: #f2b544;
-  --amber-soft: #fdf0d2;
-  --red: #b8332b;
-  --red-dark: #962720;
-  --cream: #fbf7f0;
-  --paper: #ffffff;
-  --ink: #1f2430;
-  --muted: #5b6170;
-  --line: #e8e1d4;
+  --bg: #0f1a15;
+  --bg-alt: #14231c;
+  --bg-deep: #0a120e;
+  --surface: #1b2c24;
+  --line: rgb(241 231 211 / 0.12);
+  --text: #f1e7d3;
+  --muted: #b5aa93;
+  --gold: #e3b45b;
+  --gold-hover: #ecc277;
+  --gold-soft: rgb(227 180 91 / 0.14);
+  --on-gold: #1c160b;
+  --wine: #6b2230;
+  --wine-deep: #2a1016;
 
   --serif: 'Fraunces Variable', Georgia, serif;
   --sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --wrap: 68rem;
   --radius: 1rem;
-  --shadow: 0 1px 2px rgb(20 33 61 / 0.06), 0 8px 24px rgb(20 33 61 / 0.08);
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.2), 0 10px 30px rgb(0 0 0 / 0.25);
 }
 
 *,
@@ -32,8 +34,8 @@ html {
 
 body {
   margin: 0;
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--sans);
   font-size: 1.0625rem;
   line-height: 1.65;
@@ -115,22 +117,15 @@ p {
   transform: translateY(-1px);
 }
 
-.btn-primary {
-  background: var(--red);
-  color: #fff;
-}
-
-.btn-primary:hover {
-  background: var(--red-dark);
-}
-
+.btn-primary,
 .btn-amber {
-  background: var(--amber);
-  color: var(--night);
+  background: var(--gold);
+  color: var(--on-gold);
 }
 
+.btn-primary:hover,
 .btn-amber:hover {
-  background: #f6c565;
+  background: var(--gold-hover);
 }
 
 .btn-ghost {
@@ -139,17 +134,18 @@ p {
 }
 
 .btn-ghost:hover {
-  background: rgb(255 255 255 / 0.1);
+  background: rgb(241 231 211 / 0.08);
 }
 
 .placeholder {
-  background: #fff3c4;
+  background: #f3d77a;
+  color: var(--on-gold);
   border-radius: 0.25rem;
   padding: 0 0.2em;
 }
 
 :focus-visible {
-  outline: 3px solid var(--amber);
+  outline: 3px solid var(--gold);
   outline-offset: 3px;
 }
 

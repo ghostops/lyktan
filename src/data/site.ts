@@ -1,18 +1,19 @@
 // Allt innehåll som ändras från år till år samlas här.
-// Värden inom [hakparenteser] är platshållare som ska bytas ut.
+// Tomma värden ('') visas inte på sidan – fyll i dem när de är kända.
 
 export const site = {
   name: 'Föreningen Lyktan',
   url: 'http://jjr3afwtimmpcrr7xvdyxghk.62.238.42.92.sslip.io', // Tillfällig URL – byt till riktig domän
   description:
     'Föreningen Lyktan ordnar julfirande för ensamma äldre och äldre hemlösa – med mat, musik, gemenskap och omtanke.',
-  orgNr: '[XXXXXX-XXXX]',
+  orgNr: '', // t.ex. '802000-0000'
   email: 'leah.aahmed@gmail.com',
   instagram: {
     handle: '@foreningen_lyktan',
     url: 'https://www.instagram.com/foreningen_lyktan/',
   },
   swish: '123 003 43 55',
+  swishMessage: 'Jul', // förifyllt meddelande i QR-koden (public/swish-qr.png)
   volunteerForm:
     'https://docs.google.com/forms/d/e/1FAIpQLScyNIX37oUtnOwlJqIzFHj1wvDCl2jLF1O4zxxjYm6ahVZncA/viewform',
 };
@@ -27,11 +28,15 @@ export const event = {
   mapUrl: 'https://www.openstreetmap.org/search?query=Rosenlundsgatan%2044%20A%2C%20Stockholm',
 };
 
+// Siffror från förra året. Bandet visas bara när alla värden är ifyllda.
 export const stats = [
-  { value: '[XX]', label: 'gäster förra året' },
-  { value: '[XX]', label: 'volontärer' },
-  { value: '[XX]', label: 'julklappar delades ut' },
+  { value: '', label: 'gäster förra året' },
+  { value: '', label: 'volontärer' },
+  { value: '', label: 'julklappar delades ut' },
 ];
+
+// Var och när julklappar lämnas, t.ex. 'Lämna dem på … senast 20 december.'
+export const giftDropoff = '';
 
 export const giftWishes = [
   'Varma sockor, mössor och vantar',

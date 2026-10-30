@@ -6,14 +6,13 @@ import {
   HeartHandshake,
   MessageCircle,
   Music,
-  Snowflake,
   TreePine,
   Utensils,
   UtensilsCrossed,
 } from '@lucide/astro';
 import Lantern from '../components/Lantern.astro';
 import Lights from '../components/Lights.astro';
-import { site, event, stats, giftWishes } from '../data/site';
+import { site, event, stats, giftDropoff, giftWishes } from '../data/site';
 
 const nav = [
   { href: '#om-oss', label: 'Om oss' },
@@ -25,9 +24,9 @@ const nav = [
 
 const tasks = [
   { icon: Cookie, title: 'Baka', text: 'Kakor och bullar inför firandet.' },
+  { icon: TreePine, title: 'Pynta', text: 'Förbereda och göra lokalen julig.' },
   { icon: CookingPot, title: 'Laga mat', text: 'Laga eller värma upp jullunchen.' },
   { icon: UtensilsCrossed, title: 'Servera', text: 'Duka, servera och plocka undan.' },
-  { icon: TreePine, title: 'Pynta', text: 'Förbereda och göra lokalen julig.' },
   { icon: MessageCircle, title: 'Umgås', text: 'Sitta ner, prata och bjuda på sällskap.' },
 ];
 
@@ -50,15 +49,8 @@ const faq = [
   },
 ];
 
-// Snöflingor i bakgrunden: [vänster %, topp %, storlek rem, opacitet]
-const flakes = [
-  [6, 30, 1.5, 0.12],
-  [18, 78, 1, 0.1],
-  [42, 88, 1.25, 0.08],
-  [58, 22, 0.9, 0.1],
-  [88, 70, 1.6, 0.1],
-  [95, 35, 1, 0.12],
-];
+const showStats = stats.every((s) => s.value.trim() !== '');
+const newTab = 'öppnas i ny flik';
 ---
 
 <Base>
@@ -73,8 +65,9 @@ const flakes = [
           {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
         </ul>
       </nav>
+      <a href="#swish" class="topbar-swish">Swisha</a>
       <a href={site.volunteerForm} class="btn btn-amber topbar-cta" target="_blank" rel="noopener">
-        Bli volontär
+        Bli volontär<span class="sr-only"> ({newTab})</span>
       </a>
     </div>
   </header>
@@ -82,15 +75,6 @@ const flakes = [
   <main>
     <section class="hero">
       <Lights />
-      {
-        flakes.map(([x, y, size, o]) => (
-          <Snowflake
-            class="flake"
-            aria-hidden="true"
-            style={`left:${x}%;top:${y}%;width:${size}rem;height:${size}rem;opacity:${o}`}
-          />
-        ))
-      }
       <div class="wrap hero-inner">
         <div class="hero-text">
           <h1>Ingen ska behöva fira jul ensam.</h1>
@@ -100,9 +84,9 @@ const flakes = [
           </p>
           <div class="hero-actions">
             <a href={site.volunteerForm} class="btn btn-amber" target="_blank" rel="noopener">
-              Bli volontär
+              Bli volontär<span class="sr-only"> ({newTab})</span>
             </a>
-            <a href="#stod-oss" class="btn btn-white">
+            <a href="#swish" class="btn btn-white">
               Bidra med <img src="/swish.svg" alt="Swish" width="72" height="22" />
             </a>
           </div>
@@ -145,18 +129,20 @@ const flakes = [
         </ul>
       </div>
 
-      <div class="wrap">
-        <ul class="stats">
-          {
-            stats.map((s) => (
-              <li>
-                <strong class="placeholder">{s.value}</strong>
-                <span>{s.label}</span>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+      {
+        showStats && (
+          <div class="wrap">
+            <ul class="stats">
+              {stats.map((s) => (
+                <li>
+                  <strong>{s.value}</strong>
+                  <span>{s.label}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
     </section>
 
     <section id="julfirandet" class="section event">
@@ -175,7 +161,9 @@ const flakes = [
             <dt>Var</dt>
             <dd>
               {event.address}<br />{event.area}<br />
-              <a href={event.mapUrl} target="_blank" rel="noopener">Visa på karta →</a>
+              <a href={event.mapUrl} class="map-link" target="_blank" rel="noopener">
+                Visa på karta<span class="sr-only"> ({newTab})</span> →
+              </a>
             </dd>
           </div>
           <div><dt>För vem</dt><dd>Ensamma äldre och äldre hemlösa</dd></div>
@@ -188,7 +176,7 @@ const flakes = [
       <div class="wrap">
         <h2>Ge en timme – ge någon en jul</h2>
         <p class="lead">
-          Vi söker volontärer som vill hjälpa till före och/eller under firandet. Du behöver ingen
+          Vi behöver hjälp både inför firandet och på juldagen kl. {event.time}. Du behöver ingen
           tidigare erfarenhet – bara lust att bidra.
         </p>
 
@@ -196,9 +184,13 @@ const flakes = [
           {
             tasks.map((t) => (
               <li>
-                <span class="icon"><t.icon aria-hidden="true" /></span>
-                <h3>{t.title}</h3>
-                <p>{t.text}</p>
+                <span class="icon">
+                  <t.icon aria-hidden="true" />
+                </span>
+                <div>
+                  <h3>{t.title}</h3>
+                  <p>{t.text}</p>
+                </div>
               </li>
             ))
           }
@@ -213,7 +205,7 @@ const flakes = [
             <h3>Kom på volontärträffen</h3>
             <p>
               En digital träff där du lär känna föreningen och de andra volontärerna och får svar på
-              dina frågor. Datum hittar du i formuläret.
+              dina frågor. Datum väljer du i formuläret.
             </p>
           </li>
           <li>
@@ -222,30 +214,30 @@ const flakes = [
           </li>
         </ol>
 
-        <a href={site.volunteerForm} class="btn btn-primary" target="_blank" rel="noopener">
-          Anmäl intresse
-        </a>
+        <div class="volunteer-cta">
+          <a href={site.volunteerForm} class="btn btn-primary" target="_blank" rel="noopener">
+            Bli volontär<span class="sr-only"> ({newTab})</span>
+          </a>
+          <p>Anmälan görs i ett Google-formulär som öppnas i en ny flik.</p>
+        </div>
       </div>
     </section>
 
     <section id="stod-oss" class="section support">
-      {
-        flakes.map(([x, y, size, o]) => (
-          <Snowflake
-            class="flake"
-            aria-hidden="true"
-            style={`left:${100 - x}%;top:${y}%;width:${size * 1.2}rem;height:${size * 1.2}rem;opacity:${o * 0.8}`}
-          />
-        ))
-      }
       <div class="wrap">
-        <h2>Kan du inte vara med i år?</h2>
-        <p class="lead">Ingen fara – du kan ändå göra skillnad.</p>
+        <h2>Stöd julfirandet</h2>
+        <p class="lead">
+          Med ett bidrag eller en julklapp gör du juldagen varmare för någon som annars hade varit
+          ensam.
+        </p>
 
         <div class="support-grid">
-          <article class="card card-swish">
+          <article class="card card-swish" id="swish">
             <h3>Swisha ett bidrag</h3>
-            <p>Varje bidrag går till mat, julklappar och allt som behövs för en varm juldag.</p>
+            <p>
+              Föreningen drivs helt ideellt – allt går till mat, julklappar och det som behövs för
+              juldagen.
+            </p>
             <div class="swish">
               <img src="/swish.svg" alt="Swish" class="swish-logo" width="92" height="28" />
               <span class="swish-number">{site.swish}</span>
@@ -253,6 +245,18 @@ const flakes = [
                 Kopiera
               </button>
             </div>
+            <p class="swish-hint">Märk gärna betalningen ”{site.swishMessage}”.</p>
+            <figure class="swish-qr">
+              <img
+                src="/swish-qr.png"
+                alt={`QR-kod för Swish till ${site.swish}`}
+                width="360"
+                height="360"
+                loading="lazy"
+              />
+              <figcaption>Skanna med Swish-appen</figcaption>
+            </figure>
+            <p class="copy-status" role="status" aria-live="polite"></p>
           </article>
 
           <article class="card">
@@ -265,7 +269,17 @@ const flakes = [
               {giftWishes.map((g) => <li>{g}</li>)}
             </ul>
             <p class="small">
-              <span class="placeholder">[Var och när lämnas julklapparna?]</span>
+              {
+                giftDropoff || (
+                  <>
+                    Var och när du lämnar julklappar meddelar vi snart här och på{' '}
+                    <a href={site.instagram.url} target="_blank" rel="noopener">
+                      Instagram<span class="sr-only"> ({newTab})</span>
+                    </a>
+                    .
+                  </>
+                )
+              }
             </p>
           </article>
 
@@ -276,7 +290,7 @@ const flakes = [
               volontärer.
             </p>
             <a href={site.instagram.url} class="btn btn-ghost" target="_blank" rel="noopener">
-              {site.instagram.handle}
+              {site.instagram.handle}<span class="sr-only"> på Instagram ({newTab})</span>
             </a>
           </article>
         </div>
@@ -309,7 +323,9 @@ const flakes = [
         <p class="lead">Frågor, idéer eller vill du samarbeta med oss? Vi blir glada att höra från dig.</p>
         <div class="contact-actions">
           <a href={`mailto:${site.email}`} class="btn btn-amber">{site.email}</a>
-          <a href={site.instagram.url} class="btn btn-ghost" target="_blank" rel="noopener">Instagram</a>
+          <a href={site.instagram.url} class="btn btn-ghost" target="_blank" rel="noopener">
+            Instagram<span class="sr-only"> ({newTab})</span>
+          </a>
         </div>
       </div>
     </section>
@@ -318,17 +334,21 @@ const flakes = [
   <footer class="footer">
     <div class="wrap footer-inner">
       <p><strong>Föreningen Lyktan</strong> · Ideell förening · Stockholm</p>
-      <p>Org.nr <span class="placeholder">{site.orgNr}</span></p>
+      {site.orgNr && <p>Org.nr {site.orgNr}</p>}
     </div>
   </footer>
 </Base>
 
 <script>
-  // navigator.clipboard finns bara över HTTPS, så vi faller tillbaka på execCommand.
+  // navigator.clipboard finns bara över HTTPS och kan nekas, så vi faller tillbaka på execCommand.
   async function copy(text: string) {
     if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return;
+      try {
+        await navigator.clipboard.writeText(text);
+        return;
+      } catch {
+        // prova reservsättet nedan
+      }
     }
     const el = document.createElement('textarea');
     el.value = text;
@@ -342,15 +362,23 @@ const flakes = [
     if (!ok) throw new Error('copy failed');
   }
 
+  const status = document.querySelector<HTMLElement>('.copy-status');
+
   document.querySelectorAll<HTMLButtonElement>('button[data-copy]').forEach((btn) => {
     btn.addEventListener('click', async () => {
       try {
         await copy(btn.dataset.copy ?? '');
         btn.textContent = 'Kopierat!';
+        if (status) status.textContent = 'Swish-numret är kopierat.';
       } catch {
-        btn.textContent = 'Kunde inte kopiera';
+        btn.textContent = 'Kopiera';
+        if (status) status.textContent = 'Kunde inte kopiera. Markera numret och kopiera det själv.';
+        return;
       }
-      setTimeout(() => (btn.textContent = 'Kopiera'), 2000);
+      setTimeout(() => {
+        btn.textContent = 'Kopiera';
+        if (status) status.textContent = '';
+      }, 2500);
     });
   });
 </script>
@@ -387,11 +415,6 @@ const flakes = [
     position: relative;
   }
 
-  :global(.flake) {
-    position: absolute;
-    color: var(--text);
-    pointer-events: none;
-  }
 
   :global(.deco-lantern) {
     position: absolute;
@@ -502,7 +525,24 @@ const flakes = [
     color: var(--gold);
   }
 
+  .topbar-swish {
+    display: none;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 0.25rem;
+    margin-left: auto;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .topbar-swish:hover {
+    color: var(--gold);
+  }
+
   .topbar-cta {
+    position: relative;
     white-space: nowrap;
     padding: 0.5rem 1.1rem;
     font-size: 0.9375rem;
@@ -513,8 +553,8 @@ const flakes = [
       display: none;
     }
 
-    .topbar-cta {
-      margin-left: auto;
+    .topbar-swish {
+      display: inline-flex;
     }
   }
 
@@ -523,6 +563,30 @@ const flakes = [
       padding: 0.35rem 0.8rem;
       font-size: 0.8125rem;
       line-height: 1.2;
+    }
+
+    .topbar-inner {
+      gap: 0.75rem;
+    }
+
+    /* Liten knapp, men 44px träffyta */
+    .topbar-cta::after {
+      content: '';
+      position: absolute;
+      inset: -7px -4px;
+    }
+  }
+
+  /* Smala telefoner: loggan syns ändå stort i toppsektionen */
+  @media (max-width: 400px) {
+    .brand img {
+      display: none;
+    }
+  }
+
+  @media (max-width: 340px) {
+    .topbar-swish {
+      display: none;
     }
   }
 
@@ -673,9 +737,6 @@ const flakes = [
     line-height: 1.1;
   }
 
-  .stats strong.placeholder {
-    color: var(--on-gold);
-  }
 
   .stats span {
     display: block;
@@ -735,6 +796,12 @@ const flakes = [
     font-weight: 500;
   }
 
+  .map-link {
+    display: inline-block;
+    padding-block: 0.6rem;
+    margin-block: -0.6rem;
+  }
+
   @media (max-width: 760px) {
     .event-inner {
       grid-template-columns: 1fr;
@@ -753,23 +820,26 @@ const flakes = [
   .tasks {
     list-style: none;
     padding: 0;
-    margin: 2.5rem 0;
+    margin: 2.5rem 0 3rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 0 2.5rem;
   }
 
   .tasks li {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-block: 1.1rem;
+    border-top: 1px solid var(--line);
   }
 
+  .tasks .icon {
+    flex-shrink: 0;
+  }
 
   .tasks h3 {
-    margin: 0.5rem 0 0.25rem;
+    margin: 0.1rem 0 0.15rem;
   }
 
   .tasks p {
@@ -821,6 +891,19 @@ const flakes = [
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
+  }
+
+  .volunteer-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.25rem;
+  }
+
+  .volunteer-cta p {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--muted);
   }
 
   /* Support */
@@ -900,12 +983,62 @@ const flakes = [
     font: inherit;
     font-size: 0.875rem;
     font-weight: 600;
-    padding: 0.5rem 0.9rem;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
     border-radius: 999px;
     border: 0;
     background: var(--bg);
     color: var(--text);
     cursor: pointer;
+  }
+
+  .copy:focus-visible {
+    outline-color: var(--wine);
+  }
+
+  .swish-hint {
+    margin: 0.75rem 0 0;
+    font-size: 0.9375rem;
+  }
+
+  .swish-qr {
+    margin: 1.25rem 0 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .swish-qr img {
+    width: 7.5rem;
+    height: auto;
+    border-radius: 0.5rem;
+    background: #fff;
+  }
+
+  .swish-qr figcaption {
+    font-size: 0.875rem;
+    color: rgb(28 22 11 / 0.8);
+  }
+
+  .copy-status {
+    margin: 0.5rem 0 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .copy-status:empty {
+    display: none;
+  }
+
+  /* På mobil kan man inte skanna sin egen skärm */
+  @media (max-width: 760px) {
+    .swish-qr {
+      display: none;
+    }
+  }
+
+  .card .small a {
+    color: var(--gold);
   }
 
   .checklist {
@@ -1001,9 +1134,7 @@ const flakes = [
 
   /* Contact */
   .contact {
-    background:
-      radial-gradient(circle at 50% 0%, rgb(227 180 91 / 0.15), transparent 60%),
-      var(--wine);
+    background: var(--wine);
     text-align: center;
   }
 

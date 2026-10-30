@@ -10,6 +10,7 @@ target_fingerprint: "sha256:83f5ac5ec2118bba89b51dab2ca5c3d5977ea7d07e845c091c5e
 target_path: /home/user/lyktan/src/pages/index.astro
 timestamp: 2026-10-30T18-45-26Z
 slug: src-pages-index-astro
+closed: true
 ---
 Method: dual-agent (A: design review · B: detector + browser)
 

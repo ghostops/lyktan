@@ -28,6 +28,9 @@
 }
 
 html {
+  color-scheme: dark;
+  scrollbar-color: var(--surface) var(--bg-deep);
+  caret-color: var(--gold);
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
 }
@@ -75,6 +78,34 @@ h3 {
 
 p {
   margin: 0 0 1rem;
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--on-gold);
+}
+
+a {
+  text-underline-offset: 0.2em;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .wrap {
@@ -137,12 +168,6 @@ p {
   background: rgb(241 231 211 / 0.08);
 }
 
-.placeholder {
-  background: #f3d77a;
-  color: var(--on-gold);
-  border-radius: 0.25rem;
-  padding: 0 0.2em;
-}
 
 :focus-visible {
   outline: 3px solid var(--gold);

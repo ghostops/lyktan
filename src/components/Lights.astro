@@ -1,0 +1,68 @@
+---
+// Ljusslinga: hängande sladd med glödlampor, genererad som SVG.
+const span = 200;
+const sag = 38;
+const width = 1400;
+const hooks = Math.ceil(width / span);
+const colors = ['#e3b45b', '#f1e7d3', '#d98a6a', '#e3b45b', '#f6d58e'];
+
+const wire = Array.from({ length: hooks }, (_, i) => {
+  const x0 = i * span;
+  return `${i === 0 ? `M${x0},8` : ''} Q${x0 + span / 2},${8 + sag * 2} ${x0 + span},8`;
+}).join(' ');
+
+// Punkt på en kvadratisk bezier mellan två krokar
+const bulbs = Array.from({ length: hooks }, (_, i) =>
+  [0.2, 0.5, 0.8].map((t, j) => {
+    const x0 = i * span;
+    const x = (1 - t) ** 2 * x0 + 2 * (1 - t) * t * (x0 + span / 2) + t ** 2 * (x0 + span);
+    const y = (1 - t) ** 2 * 8 + 2 * (1 - t) * t * (8 + sag * 2) + t ** 2 * 8;
+    const c = (i * 3 + j) % colors.length;
+    return { x, y, c, color: colors[c], delay: ((i * 3 + j) * 0.37) % 3 };
+  }),
+).flat();
+---
+
+<svg class="lights" viewBox={`0 0 ${width} 80`} preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+  <defs>
+    {
+      colors.map((c, i) => (
+        <radialGradient id={`bulb-glow-${i}`}>
+          <stop offset="0" stop-color={c} stop-opacity="0.55" />
+          <stop offset="1" stop-color={c} stop-opacity="0" />
+        </radialGradient>
+      ))
+    }
+  </defs>
+  <path d={wire} fill="none" stroke="rgb(241 231 211 / 0.35)" stroke-width="1.5" />
+  {
+    bulbs.map((b) => (
+      <g transform={`translate(${b.x} ${b.y})`}>
+        <rect x="-2.5" y="0" width="5" height="5" rx="1" fill="rgb(241 231 211 / 0.4)" />
+        <circle cy="12" r="18" fill={`url(#bulb-glow-${b.c})`} class="glow" style={`animation-delay:${b.delay}s`} />
+        <ellipse cy="12" rx="4.5" ry="7" fill={b.color} />
+      </g>
+    ))
+  }
+</svg>
+
+<style>
+  .lights {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    pointer-events: none;
+  }
+
+  .glow {
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  @keyframes twinkle {
+    50% {
+      opacity: 0.3;
+    }
+  }
+</style>

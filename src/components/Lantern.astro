@@ -1,0 +1,30 @@
+---
+// Lykta i linjestil, används som dekor i bakgrunden.
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 120 220"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <circle cx="60" cy="12" r="8" />
+  <path d="M60 20v8" />
+  <path d="M38 48 60 28l22 20" />
+  <path d="M30 48h60l-4 10H34z" />
+  <rect x="32" y="58" width="56" height="112" rx="4" />
+  <path d="M60 58v112M32 114h56" opacity="0.5" />
+  <path d="M60 128c-6-8-6-16 0-24 6 8 6 16 0 24z" fill="currentColor" fill-opacity="0.35" />
+  <rect x="54" y="132" width="12" height="28" rx="2" />
+  <path d="M28 170h64l6 12H22z" />
+  <path d="M40 182v10h40v-10" />
+</svg>

@@ -6,10 +6,13 @@ import {
   HeartHandshake,
   MessageCircle,
   Music,
+  Snowflake,
   TreePine,
   Utensils,
   UtensilsCrossed,
 } from '@lucide/astro';
+import Lantern from '../components/Lantern.astro';
+import Lights from '../components/Lights.astro';
 import { site, event, stats, giftWishes } from '../data/site';
 
 const nav = [
@@ -46,6 +49,16 @@ const faq = [
     a: `Hör av dig till oss på ${site.email} så berättar vi mer.`,
   },
 ];
+
+// Snöflingor i bakgrunden: [vänster %, topp %, storlek rem, opacitet]
+const flakes = [
+  [6, 30, 1.5, 0.12],
+  [18, 78, 1, 0.1],
+  [42, 88, 1.25, 0.08],
+  [58, 22, 0.9, 0.1],
+  [88, 70, 1.6, 0.1],
+  [95, 35, 1, 0.12],
+];
 ---
 
 <Base>
@@ -68,6 +81,16 @@ const faq = [
 
   <main>
     <section class="hero">
+      <Lights />
+      {
+        flakes.map(([x, y, size, o]) => (
+          <Snowflake
+            class="flake"
+            aria-hidden="true"
+            style={`left:${x}%;top:${y}%;width:${size}rem;height:${size}rem;opacity:${o}`}
+          />
+        ))
+      }
       <div class="wrap hero-inner">
         <div class="hero-text">
           <h1>Ingen ska behöva fira jul ensam.</h1>
@@ -137,6 +160,7 @@ const faq = [
     </section>
 
     <section id="julfirandet" class="section event">
+      <Lantern class="deco-lantern event-lantern" />
       <div class="wrap event-inner">
         <div>
           <h2>Välkommen till årets julfirande</h2>
@@ -205,6 +229,15 @@ const faq = [
     </section>
 
     <section id="stod-oss" class="section support">
+      {
+        flakes.map(([x, y, size, o]) => (
+          <Snowflake
+            class="flake"
+            aria-hidden="true"
+            style={`left:${100 - x}%;top:${y}%;width:${size * 1.2}rem;height:${size * 1.2}rem;opacity:${o * 0.8}`}
+          />
+        ))
+      }
       <div class="wrap">
         <h2>Kan du inte vara med i år?</h2>
         <p class="lead">Ingen fara – du kan ändå göra skillnad.</p>
@@ -269,6 +302,8 @@ const faq = [
     </section>
 
     <section id="kontakt" class="section contact">
+      <Lantern class="deco-lantern contact-lantern-left" />
+      <Lantern class="deco-lantern contact-lantern-right" />
       <div class="wrap contact-inner">
         <h2>Hör av dig</h2>
         <p class="lead">Frågor, idéer eller vill du samarbeta med oss? Vi blir glada att höra från dig.</p>
@@ -334,6 +369,70 @@ const faq = [
   .icon :global(svg) {
     width: 1.375rem;
     height: 1.375rem;
+  }
+
+  /* Dekor */
+  .hero,
+  .event,
+  .support,
+  .contact {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero > .wrap,
+  .event > .wrap,
+  .support > .wrap,
+  .contact > .wrap {
+    position: relative;
+  }
+
+  :global(.flake) {
+    position: absolute;
+    color: var(--text);
+    pointer-events: none;
+  }
+
+  :global(.deco-lantern) {
+    position: absolute;
+    color: var(--gold);
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  :global(.event-lantern) {
+    height: 30rem;
+    left: -7rem;
+    bottom: -6rem;
+    rotate: -8deg;
+  }
+
+  :global(.contact-lantern-left) {
+    height: 18rem;
+    left: 6%;
+    top: -2rem;
+    rotate: 6deg;
+  }
+
+  :global(.contact-lantern-right) {
+    height: 13rem;
+    right: 8%;
+    bottom: -3rem;
+    rotate: -10deg;
+  }
+
+  @media (max-width: 760px) {
+    :global(.event-lantern) {
+      height: 20rem;
+      left: auto;
+      right: -3rem;
+      bottom: auto;
+      top: 1rem;
+    }
+
+    :global(.contact-lantern-left) {
+      left: -2rem;
+    }
   }
 
   /* Topbar */
@@ -439,7 +538,7 @@ const faq = [
     grid-template-columns: 1.4fr 1fr;
     align-items: center;
     gap: 3rem;
-    padding-block: clamp(4rem, 10vw, 7rem);
+    padding-block: clamp(5.5rem, 11vw, 8rem) clamp(4rem, 10vw, 7rem);
   }
 
 

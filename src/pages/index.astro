@@ -70,7 +70,9 @@ const faq = [
             <a href={site.volunteerForm} class="btn btn-amber" target="_blank" rel="noopener">
               Bli volontär
             </a>
-            <a href="#stod-oss" class="btn btn-ghost">Swisha ett bidrag</a>
+            <a href="#stod-oss" class="btn btn-white">
+              Bidra med <img src="/swish.svg" alt="Swish" width="72" height="22" />
+            </a>
           </div>
         </div>
         <div class="hero-logo" aria-hidden="true">
@@ -207,7 +209,7 @@ const faq = [
             <h3>Swisha ett bidrag</h3>
             <p>Varje bidrag går till mat, julklappar och allt som behövs för en varm juldag.</p>
             <div class="swish">
-              <span class="swish-label">Swish</span>
+              <img src="/swish.svg" alt="Swish" class="swish-logo" width="92" height="28" />
               <span class="swish-number">{site.swish}</span>
               <button type="button" class="copy" data-copy={site.swish.replace(/\s/g, '')}>
                 Kopiera
@@ -412,6 +414,16 @@ const faq = [
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
+  }
+
+  .btn-white {
+    background: #fff;
+    color: var(--night);
+  }
+
+  .btn-white img {
+    height: 1.35rem;
+    width: auto;
   }
 
   .hero-logo {
@@ -721,12 +733,10 @@ const faq = [
     gap: 0.1rem 1rem;
   }
 
-  .swish-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
+  .swish-logo {
+    height: 1.75rem;
+    width: auto;
+    margin-bottom: 0.35rem;
   }
 
   .swish-number {

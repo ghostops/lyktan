@@ -2,3 +2,7 @@ node_modules/
 dist/
 .astro/
 .DS_Store
+
+# Impeccable: plattformsbinären laddas ner och verifieras av launchern vid behov
+.claude/skills/impeccable/scripts/bin/
+.claude/settings.local.json

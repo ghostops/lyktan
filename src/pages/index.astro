@@ -290,15 +290,33 @@ const faq = [
 </Base>
 
 <script>
+  // navigator.clipboard finns bara över HTTPS, så vi faller tillbaka på execCommand.
+  async function copy(text: string) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const el = document.createElement('textarea');
+    el.value = text;
+    el.setAttribute('readonly', '');
+    el.style.position = 'fixed';
+    el.style.opacity = '0';
+    document.body.append(el);
+    el.select();
+    const ok = document.execCommand('copy');
+    el.remove();
+    if (!ok) throw new Error('copy failed');
+  }
+
   document.querySelectorAll<HTMLButtonElement>('button[data-copy]').forEach((btn) => {
     btn.addEventListener('click', async () => {
       try {
-        await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+        await copy(btn.dataset.copy ?? '');
         btn.textContent = 'Kopierat!';
-        setTimeout(() => (btn.textContent = 'Kopiera'), 2000);
       } catch {
         btn.textContent = 'Kunde inte kopiera';
       }
+      setTimeout(() => (btn.textContent = 'Kopiera'), 2000);
     });
   });
 </script>
@@ -343,11 +361,24 @@ const faq = [
     font-family: var(--serif);
     font-weight: 600;
     font-size: 1.125rem;
+    white-space: nowrap;
     text-decoration: none;
   }
 
   .brand img {
     border-radius: 50%;
+  }
+
+  @media (max-width: 420px) {
+    .brand {
+      font-size: 0.9375rem;
+      gap: 0.5rem;
+    }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+    }
   }
 
   nav {
@@ -795,7 +826,17 @@ const faq = [
 
   @media (max-width: 900px) {
     .support-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 400px) {
+    .card {
+      padding: 1.25rem;
+    }
+
+    .swish-number {
+      font-size: 1.25rem;
     }
   }
 

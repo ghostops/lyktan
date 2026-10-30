@@ -48,7 +48,7 @@ Vi är en ideell förening som drivs helt av volontärer. Varje juldag öppnar v
 
 | | |
 |---|---|
-| **När** | Juldagen, fredag 25 december 2026, ca 12.00–15.00 `[preliminär tid – bekräftas]` |
+| **När** | Juldagen, fredag 25 december 2026, ca 12.00–15.00 |
 | **Var** | Rosenlundsgatan 44 A, Södermalm, Stockholm |
 | **Vem** | Ensamma äldre och äldre hemlösa. Kostnadsfritt. |
 | **Vad** | Jullunch, fika, musik, julklappar och gemenskap |

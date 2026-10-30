@@ -1,5 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+import {
+  Cookie,
+  CookingPot,
+  HeartHandshake,
+  MessageCircle,
+  Music,
+  TreePine,
+  Utensils,
+  UtensilsCrossed,
+} from '@lucide/astro';
 import { site, event, stats, giftWishes } from '../data/site';
 
 const nav = [
@@ -11,11 +21,11 @@ const nav = [
 ];
 
 const tasks = [
-  { icon: '🍪', title: 'Baka', text: 'Kakor och bullar inför firandet.' },
-  { icon: '🍲', title: 'Laga mat', text: 'Laga eller värma upp jullunchen.' },
-  { icon: '🍽️', title: 'Servera', text: 'Duka, servera och plocka undan.' },
-  { icon: '🎄', title: 'Pynta', text: 'Förbereda och göra lokalen julig.' },
-  { icon: '💬', title: 'Umgås', text: 'Sitta ner, prata och bjuda på sällskap.' },
+  { icon: Cookie, title: 'Baka', text: 'Kakor och bullar inför firandet.' },
+  { icon: CookingPot, title: 'Laga mat', text: 'Laga eller värma upp jullunchen.' },
+  { icon: UtensilsCrossed, title: 'Servera', text: 'Duka, servera och plocka undan.' },
+  { icon: TreePine, title: 'Pynta', text: 'Förbereda och göra lokalen julig.' },
+  { icon: MessageCircle, title: 'Umgås', text: 'Sitta ner, prata och bjuda på sällskap.' },
 ];
 
 const faq = [
@@ -60,7 +70,6 @@ const faq = [
     <section class="hero">
       <div class="wrap hero-inner">
         <div class="hero-text">
-          <p class="hero-badge">🎄 {event.dateShort} · {event.address}, Södermalm</p>
           <h1>Ingen ska behöva fira jul ensam.</h1>
           <p class="hero-lead">
             Föreningen Lyktan ordnar julfirande för ensamma äldre och äldre hemlösa – med mat, musik,
@@ -85,7 +94,6 @@ const faq = [
     <section id="om-oss" class="section">
       <div class="wrap about">
         <div>
-          <span class="eyebrow">Om oss</span>
           <h2>Ett ljus i mörkret</h2>
           <p class="lead">
             Julen ska vara en tid av gemenskap – men för många äldre, både på boenden och utan eget hem,
@@ -100,15 +108,15 @@ const faq = [
         </div>
         <ul class="pillars">
           <li>
-            <span aria-hidden="true">🍽️</span>
+            <span class="icon"><Utensils aria-hidden="true" /></span>
             <div><h3>Mat</h3><p>En riktig jullunch med allt som hör till.</p></div>
           </li>
           <li>
-            <span aria-hidden="true">🤝</span>
+            <span class="icon"><HeartHandshake aria-hidden="true" /></span>
             <div><h3>Gemenskap</h3><p>Sällskap, samtal och någon som lyssnar.</p></div>
           </li>
           <li>
-            <span aria-hidden="true">🎶</span>
+            <span class="icon"><Music aria-hidden="true" /></span>
             <div><h3>Musik</h3><p>Julsånger och stämning som värmer.</p></div>
           </li>
         </ul>
@@ -131,7 +139,6 @@ const faq = [
     <section id="julfirandet" class="section event">
       <div class="wrap event-inner">
         <div>
-          <span class="eyebrow">Julfirandet {event.year}</span>
           <h2>Välkommen till årets julfirande</h2>
           <p class="lead">
             En eftermiddag med jullunch, fika, musik, julklappar och gemenskap. Helt kostnadsfritt för
@@ -155,7 +162,6 @@ const faq = [
 
     <section id="volontar" class="section">
       <div class="wrap">
-        <span class="eyebrow">Bli volontär</span>
         <h2>Ge en timme – ge någon en jul</h2>
         <p class="lead">
           Vi söker volontärer som vill hjälpa till före och/eller under firandet. Du behöver ingen
@@ -166,7 +172,7 @@ const faq = [
           {
             tasks.map((t) => (
               <li>
-                <span aria-hidden="true">{t.icon}</span>
+                <span class="icon"><t.icon aria-hidden="true" /></span>
                 <h3>{t.title}</h3>
                 <p>{t.text}</p>
               </li>
@@ -200,7 +206,6 @@ const faq = [
 
     <section id="stod-oss" class="section support">
       <div class="wrap">
-        <span class="eyebrow">Stöd oss</span>
         <h2>Kan du inte vara med i år?</h2>
         <p class="lead">Ingen fara – du kan ändå göra skillnad.</p>
 
@@ -248,7 +253,6 @@ const faq = [
     <section class="section">
       <div class="wrap faq">
         <div>
-          <span class="eyebrow">Vanliga frågor</span>
           <h2>Bra att veta</h2>
         </div>
         <div>
@@ -300,6 +304,21 @@ const faq = [
 </script>
 
 <style>
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.75rem;
+    background: var(--amber-soft);
+    color: var(--red);
+  }
+
+  .icon :global(svg) {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+
   /* Topbar */
   .topbar {
     position: sticky;
@@ -393,15 +412,6 @@ const faq = [
     padding-block: clamp(4rem, 10vw, 7rem);
   }
 
-  .hero-badge {
-    display: inline-block;
-    padding: 0.4rem 0.9rem;
-    border-radius: 999px;
-    background: rgb(255 255 255 / 0.1);
-    border: 1px solid rgb(255 255 255 / 0.18);
-    font-size: 0.875rem;
-    margin-bottom: 1.5rem;
-  }
 
   .hero-lead {
     font-size: 1.25rem;
@@ -489,8 +499,8 @@ const faq = [
     box-shadow: var(--shadow);
   }
 
-  .pillars span {
-    font-size: 1.75rem;
+  .pillars .icon {
+    flex-shrink: 0;
   }
 
   .pillars h3 {
@@ -613,9 +623,6 @@ const faq = [
     padding: 1.25rem;
   }
 
-  .tasks span {
-    font-size: 1.75rem;
-  }
 
   .tasks h3 {
     margin: 0.5rem 0 0.25rem;
@@ -678,9 +685,6 @@ const faq = [
     color: #fff;
   }
 
-  .support .eyebrow {
-    color: var(--amber);
-  }
 
   .support .lead {
     color: rgb(255 255 255 / 0.75);

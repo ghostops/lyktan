@@ -86,16 +86,6 @@ p {
   padding-block: clamp(4rem, 9vw, 6.5rem);
 }
 
-.eyebrow {
-  display: inline-block;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 0.75rem;
-}
-
 .lead {
   font-size: 1.1875rem;
   color: var(--muted);

@@ -96,6 +96,23 @@ a {
   text-underline-offset: 0.2em;
 }
 
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--gold);
+  color: var(--on-gold);
+  font-weight: 600;
+  translate: 0 -200%;
+}
+
+.skip-link:focus {
+  translate: 0 0;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

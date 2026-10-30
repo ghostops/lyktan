@@ -29,6 +29,7 @@ const { title = site.name, description = site.description } = Astro.props;
     <meta property="og:image" content={new URL('/logo.jpg', site.url)} />
   </head>
   <body>
+    <a href="#innehall" class="skip-link">Hoppa till innehållet</a>
     <slot />
   </body>
 </html>

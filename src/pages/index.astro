@@ -5,29 +5,39 @@ import {
   CookingPot,
   HeartHandshake,
   MessageCircle,
-  Music,
+  Gift,
   TreePine,
   Utensils,
   UtensilsCrossed,
 } from '@lucide/astro';
 import Lantern from '../components/Lantern.astro';
 import Lights from '../components/Lights.astro';
-import { site, event, stats, giftDropoff, giftWishes } from '../data/site';
+import { site, event, stats, giftDropoff, giftWishes, extraFaq } from '../data/site';
 
 const nav = [
   { href: '#om-oss', label: 'Om oss' },
   { href: '#julfirandet', label: 'Julfirandet' },
-  { href: '#volontar', label: 'Bli volontär' },
+  { href: '#volontar', label: 'Volontär' },
   { href: '#stod-oss', label: 'Stöd oss' },
   { href: '#kontakt', label: 'Kontakt' },
 ];
 
-const tasks = [
-  { icon: Cookie, title: 'Baka', text: 'Kakor och bullar inför firandet.' },
-  { icon: TreePine, title: 'Pynta', text: 'Förbereda och göra lokalen julig.' },
-  { icon: CookingPot, title: 'Laga mat', text: 'Laga eller värma upp jullunchen.' },
-  { icon: UtensilsCrossed, title: 'Servera', text: 'Duka, servera och plocka undan.' },
-  { icon: MessageCircle, title: 'Umgås', text: 'Sitta ner, prata och bjuda på sällskap.' },
+const taskGroups = [
+  {
+    title: 'Före juldagen',
+    tasks: [
+      { icon: Cookie, title: 'Baka', text: 'Kakor och bullar inför firandet.' },
+      { icon: TreePine, title: 'Pynta', text: 'Förbereda och göra lokalen julig.' },
+    ],
+  },
+  {
+    title: `På juldagen kl. ${event.time}`,
+    tasks: [
+      { icon: CookingPot, title: 'Laga mat', text: 'Laga eller värma upp jullunchen.' },
+      { icon: UtensilsCrossed, title: 'Servera', text: 'Duka, servera och plocka undan.' },
+      { icon: MessageCircle, title: 'Umgås', text: 'Sitta ner, prata och bjuda på sällskap.' },
+    ],
+  },
 ];
 
 const faq = [
@@ -47,6 +57,7 @@ const faq = [
     q: 'Jag vet någon som borde komma – hur gör jag?',
     a: `Hör av dig till oss på ${site.email} så berättar vi mer.`,
   },
+  ...extraFaq.filter((f) => f.a.trim() !== ''),
 ];
 
 const showStats = stats.every((s) => s.value.trim() !== '');
@@ -72,11 +83,14 @@ const newTab = 'öppnas i ny flik';
     </div>
   </header>
 
-  <main>
+  <main id="innehall">
     <section class="hero">
       <Lights />
       <div class="wrap hero-inner">
         <div class="hero-text">
+          <p class="season-note" data-after={event.endIso} hidden>
+            Tack för i år! Julfirandet {event.year} är över – vi ses nästa jul.
+          </p>
           <h1>Ingen ska behöva fira jul ensam.</h1>
           <p class="hero-lead">
             Föreningen Lyktan ordnar julfirande för ensamma äldre och äldre hemlösa – med mat, musik,
@@ -116,15 +130,15 @@ const newTab = 'öppnas i ny flik';
         <ul class="pillars">
           <li>
             <span class="icon"><Utensils aria-hidden="true" /></span>
-            <div><h3>Mat</h3><p>En riktig jullunch med allt som hör till.</p></div>
+            <div><h3>Jullunch</h3><p>Lagad och serverad av volontärer, med hembakat fika.</p></div>
+          </li>
+          <li>
+            <span class="icon"><Gift aria-hidden="true" /></span>
+            <div><h3>Julklappar</h3><p>En julklapp till gästerna från vår insamling.</p></div>
           </li>
           <li>
             <span class="icon"><HeartHandshake aria-hidden="true" /></span>
-            <div><h3>Gemenskap</h3><p>Sällskap, samtal och någon som lyssnar.</p></div>
-          </li>
-          <li>
-            <span class="icon"><Music aria-hidden="true" /></span>
-            <div><h3>Musik</h3><p>Julsånger och stämning som värmer.</p></div>
+            <div><h3>Sällskap</h3><p>Ett dukat bord och någon som har tid att lyssna.</p></div>
           </li>
         </ul>
       </div>
@@ -149,9 +163,9 @@ const newTab = 'öppnas i ny flik';
       <Lantern class="deco-lantern event-lantern" />
       <div class="wrap event-inner">
         <div>
-          <h2>Välkommen till årets julfirande</h2>
+          <h2>Juldagen {event.year}</h2>
           <p class="lead">
-            En eftermiddag med jullunch, fika, musik, julklappar och gemenskap. Helt kostnadsfritt för
+            Dagen du hjälper till med: en eftermiddag med jullunch, fika, musik och julklappar för
             våra gäster.
           </p>
         </div>
@@ -166,8 +180,23 @@ const newTab = 'öppnas i ny flik';
               </a>
             </dd>
           </div>
-          <div><dt>För vem</dt><dd>Ensamma äldre och äldre hemlösa</dd></div>
-          <div><dt>Kostnad</dt><dd>Gratis</dd></div>
+          <div><dt>Gäster</dt><dd>Ensamma äldre och äldre hemlösa – gratis för alla gäster</dd></div>
+          {
+            event.volunteerArrival && (
+              <div>
+                <dt>Volontärer</dt>
+                <dd>På plats {event.volunteerArrival}</dd>
+              </div>
+            )
+          }
+          {
+            event.signupDeadline && (
+              <div>
+                <dt>Anmälan</dt>
+                <dd>Senast {event.signupDeadline}</dd>
+              </div>
+            )
+          }
         </dl>
       </div>
     </section>
@@ -180,21 +209,28 @@ const newTab = 'öppnas i ny flik';
           tidigare erfarenhet – bara lust att bidra.
         </p>
 
-        <ul class="tasks">
+        <div class="task-groups">
           {
-            tasks.map((t) => (
-              <li>
-                <span class="icon">
-                  <t.icon aria-hidden="true" />
-                </span>
-                <div>
-                  <h3>{t.title}</h3>
-                  <p>{t.text}</p>
-                </div>
-              </li>
+            taskGroups.map((group) => (
+              <div class="task-group">
+                <h3>{group.title}</h3>
+                <ul class="tasks">
+                  {group.tasks.map((t) => (
+                    <li>
+                      <span class="icon">
+                        <t.icon aria-hidden="true" />
+                      </span>
+                      <div>
+                        <strong>{t.title}</strong>
+                        <p>{t.text}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))
           }
-        </ul>
+        </div>
 
         <ol class="steps">
           <li>
@@ -218,7 +254,10 @@ const newTab = 'öppnas i ny flik';
           <a href={site.volunteerForm} class="btn btn-primary" target="_blank" rel="noopener">
             Bli volontär<span class="sr-only"> ({newTab})</span>
           </a>
-          <p>Anmälan görs i ett Google-formulär som öppnas i en ny flik.</p>
+          <p>
+            Anmälan görs i ett Google-formulär som öppnas i en ny flik.
+            {event.signupDeadline && <> Sista dag: {event.signupDeadline}.</>}
+          </p>
         </div>
       </div>
     </section>
@@ -245,7 +284,11 @@ const newTab = 'öppnas i ny flik';
                 Kopiera
               </button>
             </div>
-            <p class="swish-hint">Märk gärna betalningen ”{site.swishMessage}”.</p>
+            <p class="copy-status" role="status" aria-live="polite"></p>
+            <p class="swish-hint">
+              {site.swishRecipient && <>Mottagare i Swish: <strong>{site.swishRecipient}</strong>. </>}
+              Märk gärna betalningen ”{site.swishMessage}”.
+            </p>
             <figure class="swish-qr">
               <img
                 src="/swish-qr.png"
@@ -256,7 +299,6 @@ const newTab = 'öppnas i ny flik';
               />
               <figcaption>Skanna med Swish-appen</figcaption>
             </figure>
-            <p class="copy-status" role="status" aria-live="polite"></p>
           </article>
 
           <article class="card">
@@ -283,16 +325,6 @@ const newTab = 'öppnas i ny flik';
             </p>
           </article>
 
-          <article class="card">
-            <h3>Sprid ordet</h3>
-            <p>
-              Följ och dela oss på Instagram, och tipsa vänner och familj som kanske vill bli
-              volontärer.
-            </p>
-            <a href={site.instagram.url} class="btn btn-ghost" target="_blank" rel="noopener">
-              {site.instagram.handle}<span class="sr-only"> på Instagram ({newTab})</span>
-            </a>
-          </article>
         </div>
       </div>
     </section>
@@ -301,6 +333,9 @@ const newTab = 'öppnas i ny flik';
       <div class="wrap faq">
         <div>
           <h2>Bra att veta</h2>
+          <p class="faq-aside">
+            Hittar du inte svaret? Mejla <a href={`mailto:${site.email}`}>{site.email}</a>.
+          </p>
         </div>
         <div>
           {
@@ -319,14 +354,22 @@ const newTab = 'öppnas i ny flik';
       <Lantern class="deco-lantern contact-lantern-left" />
       <Lantern class="deco-lantern contact-lantern-right" />
       <div class="wrap contact-inner">
-        <h2>Hör av dig</h2>
-        <p class="lead">Frågor, idéer eller vill du samarbeta med oss? Vi blir glada att höra från dig.</p>
+        <h2>Var med och gör juldagen varm</h2>
+        <p class="lead">Som volontär, med ett bidrag eller genom att dela vidare till någon som vill hjälpa till.</p>
         <div class="contact-actions">
-          <a href={`mailto:${site.email}`} class="btn btn-amber">{site.email}</a>
-          <a href={site.instagram.url} class="btn btn-ghost" target="_blank" rel="noopener">
-            Instagram<span class="sr-only"> ({newTab})</span>
+          <a href={site.volunteerForm} class="btn btn-amber" target="_blank" rel="noopener">
+            Bli volontär<span class="sr-only"> ({newTab})</span>
+          </a>
+          <a href="#swish" class="btn btn-white">
+            Bidra med <img src="/swish.svg" alt="Swish" width="72" height="22" />
           </a>
         </div>
+        <p class="contact-more">
+          Frågor eller idéer? Mejla <a href={`mailto:${site.email}`}>{site.email}</a> eller följ och
+          dela <a href={site.instagram.url} target="_blank" rel="noopener"
+            >{site.instagram.handle}<span class="sr-only"> på Instagram ({newTab})</span></a
+          >.
+        </p>
       </div>
     </section>
   </main>
@@ -361,6 +404,11 @@ const newTab = 'öppnas i ny flik';
     el.remove();
     if (!ok) throw new Error('copy failed');
   }
+
+  // Efter juldagen: visa tack-raden i stället för att låtsas att firandet är kommande
+  document.querySelectorAll<HTMLElement>('[data-after]').forEach((el) => {
+    if (Date.now() > Date.parse(el.dataset.after ?? '')) el.hidden = false;
+  });
 
   const status = document.querySelector<HTMLElement>('.copy-status');
 
@@ -817,20 +865,30 @@ const newTab = 'öppnas i ny flik';
   }
 
   /* Volunteer */
+  .task-groups {
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    gap: 1.5rem 3rem;
+    margin: 2.5rem 0 3rem;
+  }
+
+  .task-group h3 {
+    font-size: 1.125rem;
+    color: var(--gold);
+    margin-bottom: 0.25rem;
+  }
+
   .tasks {
     list-style: none;
     padding: 0;
-    margin: 2.5rem 0 3rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-    gap: 0 2.5rem;
+    margin: 0;
   }
 
   .tasks li {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    padding-block: 1.1rem;
+    padding-block: 1rem;
     border-top: 1px solid var(--line);
   }
 
@@ -838,14 +896,24 @@ const newTab = 'öppnas i ny flik';
     flex-shrink: 0;
   }
 
-  .tasks h3 {
-    margin: 0.1rem 0 0.15rem;
+  .tasks strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-top: 0.1rem;
   }
 
   .tasks p {
     margin: 0;
     font-size: 0.9375rem;
     color: var(--muted);
+  }
+
+  @media (max-width: 760px) {
+    .task-groups {
+      grid-template-columns: 1fr;
+    }
   }
 
   .steps {
@@ -860,25 +928,13 @@ const newTab = 'öppnas i ny flik';
 
   .steps li {
     counter-increment: step;
-    position: relative;
-    padding-top: 3.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
   }
 
-  .steps li::before {
-    content: counter(step);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 2.5rem;
-    height: 2.5rem;
-    display: grid;
-    place-items: center;
-    border-radius: 50%;
-    background: var(--gold);
-    color: var(--on-gold);
-    font-family: var(--serif);
-    font-weight: 600;
-    font-size: 1.125rem;
+  .steps h3::before {
+    content: counter(step) '. ';
+    color: var(--gold);
   }
 
   .steps p {
@@ -891,6 +947,36 @@ const newTab = 'öppnas i ny flik';
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
+  }
+
+  .faq-aside {
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  .faq-aside a,
+  .contact-more a {
+    color: var(--gold);
+  }
+
+  .contact-more {
+    margin: 1.5rem 0 0;
+    color: rgb(241 231 211 / 0.85);
+    font-size: 0.9375rem;
+    max-width: 34rem;
+  }
+
+  .season-note {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    background: var(--gold-soft);
+    color: var(--gold);
+    font-size: 0.9375rem;
+  }
+
+  .season-note[hidden] {
+    display: none;
   }
 
   .volunteer-cta {
@@ -918,7 +1004,7 @@ const newTab = 'öppnas i ny flik';
 
   .support-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
     margin-top: 2.5rem;
   }
@@ -1021,7 +1107,7 @@ const newTab = 'öppnas i ny flik';
   }
 
   .copy-status {
-    margin: 0.5rem 0 0;
+    margin: 0.6rem 0 0;
     font-size: 0.875rem;
     font-weight: 600;
   }

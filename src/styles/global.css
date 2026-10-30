@@ -1,8 +1,8 @@
 :root {
-  --bg: #0f1a15;
-  --bg-alt: #14231c;
-  --bg-deep: #0a120e;
-  --surface: #1b2c24;
+  --bg: #1a0f12;
+  --bg-alt: #22131a;
+  --bg-deep: #120a0c;
+  --surface: #2c1820;
   --line: rgb(241 231 211 / 0.12);
   --text: #f1e7d3;
   --muted: #b5aa93;
@@ -10,8 +10,8 @@
   --gold-hover: #ecc277;
   --gold-soft: rgb(227 180 91 / 0.14);
   --on-gold: #1c160b;
-  --wine: #6b2230;
-  --wine-deep: #2a1016;
+  --wine: #5c1a29;
+  --wine-deep: #33121c;
 
   --serif: 'Fraunces Variable', Georgia, serif;
   --sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;

@@ -3,7 +3,7 @@
 
 export const site = {
   name: 'Föreningen Lyktan',
-  url: 'https://example.com', // [domän]
+  url: 'http://jjr3afwtimmpcrr7xvdyxghk.62.238.42.92.sslip.io', // Tillfällig URL – byt till riktig domän
   description:
     'Föreningen Lyktan ordnar julfirande för ensamma äldre och äldre hemlösa – med mat, musik, gemenskap och omtanke.',
   orgNr: '[XXXXXX-XXXX]',

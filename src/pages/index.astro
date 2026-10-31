@@ -47,14 +47,14 @@ const faq = [
   },
   {
     q: 'Måste jag vara med hela dagen?',
-    a: 'Nej, du hjälper till med så mycket eller lite du vill – före eller under firandet.',
+    a: 'Nej, du hjälper till med så mycket eller lite du vill, före eller under firandet.',
   },
   {
     q: 'Vart går mina pengar?',
     a: 'Allt går till firandet: mat, julklappar och det som behövs för dagen. Föreningen drivs helt ideellt av volontärer.',
   },
   {
-    q: 'Jag vet någon som borde komma – hur gör jag?',
+    q: 'Jag vet någon som borde komma. Hur gör jag?',
     a: `Hör av dig till oss på ${site.email} så berättar vi mer.`,
   },
   ...extraFaq.filter((f) => f.a.trim() !== ''),
@@ -89,12 +89,12 @@ const newTab = 'öppnas i ny flik';
       <div class="wrap hero-inner">
         <div class="hero-text">
           <p class="season-note" data-after={event.endIso} hidden>
-            Tack för i år! Julfirandet {event.year} är över – vi ses nästa jul.
+            Tack för i år! Julfirandet {event.year} är över. Vi ses nästa jul.
           </p>
           <h1>Ingen ska behöva fira jul ensam.</h1>
           <p class="hero-lead">
-            Föreningen Lyktan ordnar julfirande för ensamma äldre och äldre hemlösa – med mat, musik,
-            gemenskap och omtanke.
+            Föreningen Lyktan ordnar julfirande med mat, musik, gemenskap och omtanke
+            för ensamma äldre och äldre hemlösa.
           </p>
           <div class="hero-actions">
             <a href={site.volunteerForm} class="btn btn-amber" target="_blank" rel="noopener">
@@ -117,7 +117,7 @@ const newTab = 'öppnas i ny flik';
         <div>
           <h2>Ett ljus i mörkret</h2>
           <p class="lead">
-            Julen ska vara en tid av gemenskap – men för många äldre, både på boenden och utan eget hem,
+            Julen ska vara en tid av gemenskap. Men för många äldre, både på boenden och utan eget hem,
             är den årets ensammaste tid. Det vill vi ändra på.
           </p>
           <p>
@@ -198,7 +198,7 @@ const newTab = 'öppnas i ny flik';
               </a>
             </dd>
           </div>
-          <div><dt>Gäster</dt><dd>Ensamma äldre och äldre hemlösa – gratis för alla gäster</dd></div>
+          <div><dt>Gäster</dt><dd>Ensamma äldre och äldre hemlösa. Gratis för alla gäster.</dd></div>
           {
             event.volunteerArrival && (
               <div>
@@ -221,10 +221,10 @@ const newTab = 'öppnas i ny flik';
 
     <section id="volontar" class="section">
       <div class="wrap">
-        <h2>Ge en timme – ge någon en jul</h2>
+        <h2>Ge en timme, ge någon en jul</h2>
         <p class="lead">
           Vi behöver hjälp både inför firandet och på juldagen kl. {event.time}. Du behöver ingen
-          tidigare erfarenhet – bara lust att bidra.
+          tidigare erfarenhet, bara lust att bidra.
         </p>
 
         <div class="task-groups">
@@ -253,7 +253,7 @@ const newTab = 'öppnas i ny flik';
         <ol class="steps">
           <li>
             <h3>Anmäl intresse</h3>
-            <p>Fyll i vårt formulär – det tar bara ett par minuter.</p>
+            <p>Fyll i vårt formulär. Det tar bara ett par minuter.</p>
           </li>
           <li>
             <h3>Kom på volontärträffen</h3>
@@ -264,7 +264,7 @@ const newTab = 'öppnas i ny flik';
           </li>
           <li>
             <h3>Var med på juldagen</h3>
-            <p>Eller hjälp till med förberedelserna – du väljer själv hur mycket.</p>
+            <p>Eller hjälp till med förberedelserna. Du väljer själv hur mycket.</p>
           </li>
         </ol>
 
@@ -292,7 +292,7 @@ const newTab = 'öppnas i ny flik';
           <article class="card card-swish" id="swish">
             <h3>Swisha ett bidrag</h3>
             <p>
-              Föreningen drivs helt ideellt – allt går till mat, julklappar och det som behövs för
+              Föreningen drivs helt ideellt. Allt går till mat, julklappar och det som behövs för
               juldagen.
             </p>
             <div class="swish">
@@ -322,7 +322,7 @@ const newTab = 'öppnas i ny flik';
           <article class="card">
             <h3>Julklappsinsamling</h3>
             <p>
-              Förra årets insamling blev en stor succé – i år hoppas vi kunna ge minst lika många
+              Förra årets insamling blev en stor succé, och i år hoppas vi kunna ge minst lika många
               gäster en julklapp. Önskas till exempel:
             </p>
             <ul class="checklist">
@@ -1225,7 +1225,7 @@ const newTab = 'öppnas i ny flik';
   }
 
   details[open] summary::after {
-    content: '–';
+    content: '−';
   }
 
   details p {

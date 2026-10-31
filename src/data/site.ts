@@ -1,11 +1,11 @@
 // Allt innehåll som ändras från år till år samlas här.
-// Tomma värden ('') visas inte på sidan – fyll i dem när de är kända.
+// Tomma värden ('') visas inte på sidan. Fyll i dem när de är kända.
 
 export const site = {
   name: 'Föreningen Lyktan',
-  url: 'http://jjr3afwtimmpcrr7xvdyxghk.62.238.42.92.sslip.io', // Tillfällig URL – byt till riktig domän
+  url: 'http://jjr3afwtimmpcrr7xvdyxghk.62.238.42.92.sslip.io', // Tillfällig URL, byt till riktig domän
   description:
-    'Föreningen Lyktan ordnar julfirande för ensamma äldre och äldre hemlösa – med mat, musik, gemenskap och omtanke.',
+    'Föreningen Lyktan ordnar julfirande med mat, musik, gemenskap och omtanke för ensamma äldre och äldre hemlösa.',
   orgNr: '', // t.ex. '802000-0000'
   email: 'leah.aahmed@gmail.com',
   instagram: {
@@ -23,7 +23,7 @@ export const event = {
   year: 2026,
   dateLong: 'Fredag 25 december 2026',
   dateShort: 'Juldagen 25 december',
-  time: '12.00–15.00',
+  time: '12.00 till 15.00',
   endIso: '2026-12-25T15:00:00+01:00', // efter detta visas ”vi ses nästa jul”
   volunteerArrival: '', // när volontärer ska vara på plats, t.ex. 'kl. 10.00'
   signupDeadline: '', // sista dag att anmäla sig, t.ex. '15 december'

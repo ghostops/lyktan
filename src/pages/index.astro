@@ -5,6 +5,7 @@ import {
   CookingPot,
   HeartHandshake,
   MessageCircle,
+  Snowflake,
   Gift,
   TreePine,
   Utensils,
@@ -60,6 +61,14 @@ const faq = [
   ...extraFaq.filter((f) => f.a.trim() !== ''),
 ];
 
+// Snöflingor i toppsektionen: [vänster %, topp %, storlek rem, rotation°, syns på mobil]
+const flakes: [number, number, number, number, boolean][] = [
+  [4, 30, 2.25, 0, false],
+  [44, 78, 1.5, 20, false],
+  [93, 24, 2.75, 12, true],
+  [86, 82, 1.75, -15, true],
+];
+
 const showStats = stats.every((s) => s.value.trim() !== '');
 const newTab = 'öppnas i ny flik';
 ---
@@ -86,6 +95,15 @@ const newTab = 'öppnas i ny flik';
   <main id="innehall">
     <section class="hero">
       <Lights />
+      {
+        flakes.map(([x, y, size, turn, mobile]) => (
+          <Snowflake
+            class:list={['flake', { 'flake-desktop': !mobile }]}
+            aria-hidden="true"
+            style={`left:${x}%;top:${y}%;width:${size}rem;height:${size}rem;rotate:${turn}deg`}
+          />
+        ))
+      }
       <div class="wrap hero-inner">
         <div class="hero-text">
           <p class="season-note" data-after={event.endIso} hidden>
@@ -481,6 +499,26 @@ const newTab = 'öppnas i ny flik';
     position: relative;
   }
 
+
+  :global(.flake) {
+    position: absolute;
+    color: var(--text);
+    opacity: 0.28;
+    stroke-width: 1.5;
+    translate: -50% -50%;
+    pointer-events: none;
+  }
+
+  @media (max-width: 760px) {
+    :global(.flake-desktop) {
+      display: none;
+    }
+
+    :global(.flake) {
+      opacity: 0.2;
+      scale: 0.75;
+    }
+  }
 
   :global(.deco-lantern) {
     position: absolute;

@@ -69,6 +69,13 @@ const flakes: [number, number, number, number, boolean][] = [
   [86, 82, 1.75, -15, true],
 ];
 
+const supportFlakes: [number, number, number, number, boolean][] = [
+  [90, 14, 2.5, -10, true],
+  [70, 9, 1.5, 15, false],
+  [3, 55, 1.75, 8, false],
+  [96, 88, 1.75, -20, true],
+];
+
 const showStats = stats.every((s) => s.value.trim() !== '');
 const newTab = 'öppnas i ny flik';
 ---
@@ -299,6 +306,15 @@ const newTab = 'öppnas i ny flik';
     </section>
 
     <section id="stod-oss" class="section support">
+      {
+        supportFlakes.map(([x, y, size, turn, mobile]) => (
+          <Snowflake
+            class:list={['flake', { 'flake-desktop': !mobile }]}
+            aria-hidden="true"
+            style={`left:${x}%;top:${y}%;width:${size}rem;height:${size}rem;rotate:${turn}deg`}
+          />
+        ))
+      }
       <div class="wrap">
         <h2>Stöd julfirandet</h2>
         <p class="lead">

@@ -2,7 +2,8 @@
 // Ljusslinga: hängande sladd med glödlampor, genererad som SVG.
 const span = 200;
 const sag = 38;
-const width = 1400;
+// Fast storlek, centrerad och beskuren av sektionen, så lamporna aldrig skalas eller klipps
+const width = 3600;
 const hooks = Math.ceil(width / span);
 const colors = ['#e3b45b', '#f1e7d3', '#d98a6a', '#e3b45b', '#f6d58e'];
 
@@ -23,7 +24,7 @@ const bulbs = Array.from({ length: hooks }, (_, i) =>
 ).flat();
 ---
 
-<svg class="lights" viewBox={`0 0 ${width} 80`} preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+<svg class="lights" viewBox={`0 0 ${width} 80`} width={width} height="80" aria-hidden="true">
   <defs>
     {
       colors.map((c, i) => (
@@ -50,8 +51,10 @@ const bulbs = Array.from({ length: hooks }, (_, i) =>
   .lights {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 50%;
+    translate: -50% 0;
+    width: 3600px;
+    max-width: none;
     height: 80px;
     pointer-events: none;
   }

@@ -35,7 +35,7 @@ En liten, helt ideell och lokal förening (Södermalm, Stockholm) som gör en en
 - Statisk sida byggd med Astro, deployas med Coolify (Railpack). Inga avancerade funktioner, ingen backend.
 - Inga cookies, ingen spårning och inga externa inbäddningar (självhostade typsnitt, kartlänk i stället för inbäddad karta).
 - Allt årsberoende innehåll samlas i `src/data/site.ts`.
-- Tillfällig URL tills domän finns: `http://jjr3afwtimmpcrr7xvdyxghk.62.238.42.92.sslip.io`.
+- Tillfällig URL tills domän finns: `https://lyktan.ghst.co`.
 - Odefinierat än: domän, organisationsnummer, var och när julklappar lämnas, samt vad som önskas i insamlingen.
 
 ## Brand Commitments

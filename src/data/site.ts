@@ -3,7 +3,7 @@
 
 export const site = {
   name: 'Föreningen Lyktan',
-  url: 'http://jjr3afwtimmpcrr7xvdyxghk.62.238.42.92.sslip.io', // Tillfällig URL, byt till riktig domän
+  url: 'https://lyktan.ghst.co', // Tillfällig URL, byt till riktig domän
   description:
     'Föreningen Lyktan ordnar julfirande med mat, musik, gemenskap och omtanke för ensamma äldre och äldre hemlösa.',
   orgNr: '', // t.ex. '802000-0000'
